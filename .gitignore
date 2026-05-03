@@ -16,6 +16,12 @@ taffy.jpg
 # Runtime data
 .taffy/
 logs/
+vedio/
+voice-workspace/
+models/
+*.ckpt
+*.pth
+*.safetensors
 
 # OS / editor
 .DS_Store

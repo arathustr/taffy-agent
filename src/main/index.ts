@@ -1,13 +1,18 @@
 import path from 'node:path';
 import fs from 'node:fs';
-import { app, BrowserWindow, ipcMain, nativeTheme, screen } from 'electron';
+import { app, BrowserWindow, Menu, Tray, ipcMain, nativeImage, nativeTheme, screen } from 'electron';
 import type { ApprovalDecision, RuntimeConfig, UserCommand } from '../shared/contracts';
 import { loadRuntimeConfig } from './env';
 import { AgentService } from './services/agentService';
 import { RuntimeStore } from './services/runtimeStore';
 import { SpriteStudioService } from './services/spriteStudioService';
 
+type MinimizableWindow = BrowserWindow & {
+  on(event: 'minimize', listener: (event: Electron.Event) => void): BrowserWindow;
+};
+
 let mainWindow: BrowserWindow | undefined;
+let tray: Tray | undefined;
 let agent: AgentService | undefined;
 let spriteStudio: SpriteStudioService | undefined;
 let dragSession:
@@ -58,6 +63,10 @@ async function createMainWindow(): Promise<void> {
   });
 
   mainWindow.setMenuBarVisibility(false);
+  (mainWindow as MinimizableWindow).on('minimize', (event: Electron.Event) => {
+    event.preventDefault();
+    hidePetWindow();
+  });
   raisePetWindow();
   mainWindow.webContents.on('did-fail-load', (_event, code, description, url) => {
     logWindow(`did-fail-load code=${code} description=${description} url=${url}`);
@@ -84,11 +93,66 @@ async function createMainWindow(): Promise<void> {
   }
 }
 
+function createTray(): void {
+  if (tray) return;
+
+  const icon = nativeImage.createFromPath(resolveTrayIconPath()).resize({ width: 16, height: 16 });
+  tray = new Tray(icon);
+  tray.setToolTip('Taffy Agent');
+  tray.setContextMenu(
+    Menu.buildFromTemplate([
+      { label: '显示塔菲', click: () => raisePetWindow() },
+      { label: '打开工作台', click: () => showWorkbenchWindow() },
+      { label: '隐藏到托盘', click: () => hidePetWindow() },
+      { type: 'separator' },
+      {
+        label: '置顶',
+        type: 'checkbox',
+        checked: true,
+        click: (item) => mainWindow?.setAlwaysOnTop(item.checked, 'screen-saver')
+      },
+      { type: 'separator' },
+      { label: '退出', click: () => app.quit() }
+    ])
+  );
+  tray.on('click', () => {
+    if (mainWindow?.isVisible()) {
+      hidePetWindow();
+    } else {
+      raisePetWindow();
+    }
+  });
+  tray.on('double-click', () => raisePetWindow());
+}
+
+function resolveTrayIconPath(): string {
+  const candidates = [
+    path.join(app.getAppPath(), 'dist', 'tray-icon.png'),
+    path.join(app.getAppPath(), 'public', 'tray-icon.png'),
+    path.join(process.cwd(), 'public', 'tray-icon.png')
+  ];
+  return candidates.find((candidate) => fs.existsSync(candidate)) ?? candidates[0];
+}
+
 function raisePetWindow(): void {
   if (!mainWindow || mainWindow.isDestroyed()) return;
   mainWindow.showInactive();
   mainWindow.setAlwaysOnTop(true, 'screen-saver');
   mainWindow.moveTop();
+}
+
+function showWorkbenchWindow(): void {
+  if (!mainWindow || mainWindow.isDestroyed()) return;
+  mainWindow.setResizable(true);
+  mainWindow.setSize(880, 660, true);
+  mainWindow.show();
+  mainWindow.focus();
+  mainWindow.setAlwaysOnTop(true, 'screen-saver');
+}
+
+function hidePetWindow(): void {
+  if (!mainWindow || mainWindow.isDestroyed()) return;
+  mainWindow.hide();
 }
 
 async function bootstrap(): Promise<void> {
@@ -103,6 +167,7 @@ async function bootstrap(): Promise<void> {
   });
 
   registerIpc();
+  createTray();
   await createMainWindow();
 }
 
@@ -135,7 +200,8 @@ function registerIpc(): void {
   });
   ipcMain.handle('window:action', async (_event, action: string) => {
     if (!mainWindow) return;
-    if (action === 'minimize') mainWindow.minimize();
+    if (action === 'minimize') hidePetWindow();
+    if (action === 'show') raisePetWindow();
     if (action === 'close') app.quit();
     if (action === 'toggle-always-on-top') mainWindow.setAlwaysOnTop(!mainWindow.isAlwaysOnTop());
     if (action === 'focus-browser') await agent?.focusBrowser();
@@ -151,9 +217,7 @@ function registerIpc(): void {
       );
     }
     if (action === 'workbench-mode') {
-      mainWindow.setResizable(true);
-      mainWindow.setSize(880, 660, true);
-      mainWindow.focus();
+      showWorkbenchWindow();
     }
   });
 }

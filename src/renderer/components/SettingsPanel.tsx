@@ -17,6 +17,7 @@ const deepSeekModelOptions = [
 ];
 
 const taffyVoiceEndpoint = 'https://xzjosh-taffy1-2-bert-vits2.ms.show';
+const localGptSoVitsEndpoint = 'http://127.0.0.1:9880/tts';
 
 export function SettingsPanel({ snapshot, onSave, onDetectCodex }: Props) {
   const [config, setConfig] = useState<RuntimeConfig>(snapshot.config);
@@ -152,7 +153,12 @@ export function SettingsPanel({ snapshot, onSave, onDetectCodex }: Props) {
                 voice: {
                   ...config.voice,
                   provider: event.target.value as RuntimeConfig['voice']['provider'],
-                  endpoint: event.target.value === 'taffy-bert-vits2' ? taffyVoiceEndpoint : config.voice.endpoint,
+                  endpoint:
+                    event.target.value === 'taffy-bert-vits2'
+                      ? taffyVoiceEndpoint
+                      : event.target.value === 'gpt-sovits'
+                        ? localGptSoVitsEndpoint
+                        : config.voice.endpoint,
                   enabled: event.target.value !== 'none' && config.voice.enabled
                 }
               })
@@ -164,6 +170,52 @@ export function SettingsPanel({ snapshot, onSave, onDetectCodex }: Props) {
             <option value="fish-audio">Fish Audio</option>
             <option value="none">关闭</option>
           </select>
+        </label>
+        <label>
+          <span>实时分句</span>
+          <input
+            type="checkbox"
+            checked={config.voice.realtime}
+            disabled={config.voice.provider === 'system' || config.voice.provider === 'none'}
+            onChange={(event) => setConfig({ ...config, voice: { ...config.voice, realtime: event.target.checked } })}
+          />
+        </label>
+        <label>
+          <span>缓存短句</span>
+          <input
+            type="checkbox"
+            checked={config.voice.cache}
+            disabled={config.voice.provider === 'system' || config.voice.provider === 'none'}
+            onChange={(event) => setConfig({ ...config, voice: { ...config.voice, cache: event.target.checked } })}
+          />
+        </label>
+        <label>
+          <span>切句长度 {config.voice.chunkChars ?? 52}</span>
+          <input
+            type="range"
+            min="24"
+            max="120"
+            step="4"
+            value={config.voice.chunkChars ?? 52}
+            disabled={config.voice.provider === 'system' || config.voice.provider === 'none'}
+            onChange={(event) =>
+              setConfig({ ...config, voice: { ...config.voice, chunkChars: Number(event.target.value) } })
+            }
+          />
+        </label>
+        <label>
+          <span>语速 {(config.voice.speed ?? 1).toFixed(2)}x</span>
+          <input
+            type="range"
+            min="0.5"
+            max="2"
+            step="0.05"
+            value={config.voice.speed ?? 1}
+            disabled={config.voice.provider === 'system' || config.voice.provider === 'none'}
+            onChange={(event) =>
+              setConfig({ ...config, voice: { ...config.voice, speed: Number(event.target.value) } })
+            }
+          />
         </label>
         <label>
           <span>音量 {Math.round((config.voice.volume ?? 0.78) * 100)}%</span>
@@ -183,6 +235,22 @@ export function SettingsPanel({ snapshot, onSave, onDetectCodex }: Props) {
           disabled={config.voice.provider === 'system' || config.voice.provider === 'none'}
           onChange={(event) => setConfig({ ...config, voice: { ...config.voice, endpoint: event.target.value } })}
         />
+        {config.voice.provider === 'gpt-sovits' && (
+          <>
+            <input
+              value={config.voice.referenceAudio}
+              placeholder="参考音频路径，微调模型可留空"
+              onChange={(event) =>
+                setConfig({ ...config, voice: { ...config.voice, referenceAudio: event.target.value } })
+              }
+            />
+            <input
+              value={config.voice.promptText}
+              placeholder="参考音频文本，微调模型可留空"
+              onChange={(event) => setConfig({ ...config, voice: { ...config.voice, promptText: event.target.value } })}
+            />
+          </>
+        )}
         <button className="inline-action" onClick={() => speakTaffyLine('塔菲在这里。', { ...config.voice, enabled: true })}>
           <Volume2 size={15} />
           <span>试听</span>

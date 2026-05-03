@@ -159,6 +159,14 @@ export interface RuntimeConfig {
     provider: 'taffy-bert-vits2' | 'system' | 'gpt-sovits' | 'fish-audio' | 'none';
     endpoint: string;
     volume: number;
+    realtime: boolean;
+    chunkChars: number;
+    cache: boolean;
+    textLanguage: string;
+    promptLanguage: string;
+    referenceAudio: string;
+    promptText: string;
+    speed: number;
   };
 }
 

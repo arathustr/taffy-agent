@@ -39,9 +39,17 @@ export function loadRuntimeConfig(): RuntimeConfig {
     },
     voice: {
       enabled: false,
-      provider: 'taffy-bert-vits2',
-      endpoint: process.env.TAFFY_TTS_ENDPOINT || 'https://xzjosh-taffy1-2-bert-vits2.ms.show',
-      volume: Number(process.env.TAFFY_TTS_VOLUME || 0.78)
+      provider: (process.env.TAFFY_TTS_PROVIDER as RuntimeConfig['voice']['provider']) || 'gpt-sovits',
+      endpoint: process.env.TAFFY_TTS_ENDPOINT || 'http://127.0.0.1:9880/tts',
+      volume: Number(process.env.TAFFY_TTS_VOLUME || 0.78),
+      realtime: process.env.TAFFY_TTS_REALTIME !== 'false',
+      chunkChars: Number(process.env.TAFFY_TTS_CHUNK_CHARS || 52),
+      cache: process.env.TAFFY_TTS_CACHE !== 'false',
+      textLanguage: process.env.TAFFY_TTS_TEXT_LANG || 'zh',
+      promptLanguage: process.env.TAFFY_TTS_PROMPT_LANG || 'zh',
+      referenceAudio: process.env.TAFFY_TTS_REF_AUDIO || '',
+      promptText: process.env.TAFFY_TTS_PROMPT_TEXT || '',
+      speed: Number(process.env.TAFFY_TTS_SPEED || 1)
     }
   };
 }

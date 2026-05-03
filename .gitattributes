@@ -1,6 +1,7 @@
 * text=auto
 
 .gitattributes text eol=lf
+.env.example text eol=lf
 
 *.js text eol=lf
 *.jsx text eol=lf
@@ -14,6 +15,7 @@
 *.css text eol=lf
 *.html text eol=lf
 *.py text eol=lf
+*.ps1 text eol=crlf
 
 *.png binary
 *.jpg binary

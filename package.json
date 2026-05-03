@@ -26,6 +26,8 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
+    "voice:prepare": "python scripts/prepare-gptsovits-dataset.py",
+    "voice:start": "pwsh -ExecutionPolicy Bypass -File scripts/start-gptsovits-api.ps1",
     "package": "npm run build && cross-env CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --dir",
     "dist": "npm run build && electron-builder"
   },
