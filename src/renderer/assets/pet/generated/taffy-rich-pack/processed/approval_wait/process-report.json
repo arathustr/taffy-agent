@@ -1,0 +1,152 @@
+{
+  "input": "C:\\26spring\\速成项目\\taffy\\.taffy\\gpt-sprite-runs\\taffy-rich-pack\\sources\\approval_wait-source.png",
+  "action": "approval_wait",
+  "frames": 8,
+  "frameSize": 256,
+  "sourceSize": {
+    "width": 1774,
+    "height": 887
+  },
+  "detectedCells": [
+    {
+      "left": 3,
+      "top": 3,
+      "width": 216,
+      "height": 881
+    },
+    {
+      "left": 225,
+      "top": 3,
+      "width": 216,
+      "height": 881
+    },
+    {
+      "left": 447,
+      "top": 3,
+      "width": 215,
+      "height": 881
+    },
+    {
+      "left": 668,
+      "top": 3,
+      "width": 216,
+      "height": 881
+    },
+    {
+      "left": 890,
+      "top": 3,
+      "width": 216,
+      "height": 881
+    },
+    {
+      "left": 1112,
+      "top": 3,
+      "width": 216,
+      "height": 881
+    },
+    {
+      "left": 1334,
+      "top": 3,
+      "width": 215,
+      "height": 881
+    },
+    {
+      "left": 1555,
+      "top": 3,
+      "width": 216,
+      "height": 881
+    }
+  ],
+  "sheetPath": ".taffy\\gpt-sprite-runs\\taffy-rich-pack\\processed\\approval_wait\\approval_wait-sheet-transparent.png",
+  "checkerPath": ".taffy\\gpt-sprite-runs\\taffy-rich-pack\\processed\\approval_wait\\approval_wait-sheet-checker.png",
+  "htmlPath": ".taffy\\gpt-sprite-runs\\taffy-rich-pack\\processed\\approval_wait\\preview.html",
+  "alphaCorners": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "greenResidue": 0,
+  "quality": [
+    {
+      "frame": 0,
+      "alphaCorners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "greenResidue": 0
+    },
+    {
+      "frame": 1,
+      "alphaCorners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "greenResidue": 0
+    },
+    {
+      "frame": 2,
+      "alphaCorners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "greenResidue": 0
+    },
+    {
+      "frame": 3,
+      "alphaCorners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "greenResidue": 0
+    },
+    {
+      "frame": 4,
+      "alphaCorners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "greenResidue": 0
+    },
+    {
+      "frame": 5,
+      "alphaCorners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "greenResidue": 0
+    },
+    {
+      "frame": 6,
+      "alphaCorners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "greenResidue": 0
+    },
+    {
+      "frame": 7,
+      "alphaCorners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "greenResidue": 0
+    }
+  ]
+}

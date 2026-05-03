@@ -1,0 +1,205 @@
+{
+  "name": "taffy-rich-gpt-sprite-pack",
+  "version": "0.2.0",
+  "source": "Codex built-in image generation from taffy.jpg reference; local chroma-key postprocess",
+  "frameSize": {
+    "width": 256,
+    "height": 256
+  },
+  "frameCount": 8,
+  "backgroundRemoved": true,
+  "qualityChecks": {
+    "transparentCorners": true,
+    "greenResidue": 0
+  },
+  "actions": [
+    {
+      "id": "idle",
+      "displayName": "站立呼吸",
+      "frameCount": 8,
+      "fps": 8,
+      "loop": true,
+      "sheet": "processed/idle/idle-sheet-transparent.png",
+      "checkerSheet": "processed/idle/idle-sheet-checker.png",
+      "frames": "processed/idle/frames",
+      "triggers": [
+        "默认待机",
+        "短暂停顿"
+      ]
+    },
+    {
+      "id": "thinking",
+      "displayName": "思考规划",
+      "frameCount": 8,
+      "fps": 7,
+      "loop": true,
+      "sheet": "processed/thinking/thinking-sheet-transparent.png",
+      "checkerSheet": "processed/thinking/thinking-sheet-checker.png",
+      "frames": "processed/thinking/frames",
+      "triggers": [
+        "LLM 推理",
+        "等待工具返回"
+      ]
+    },
+    {
+      "id": "greeting",
+      "displayName": "招呼互动",
+      "frameCount": 8,
+      "fps": 9,
+      "loop": true,
+      "sheet": "processed/greeting/greeting-sheet-transparent.png",
+      "checkerSheet": "processed/greeting/greeting-sheet-checker.png",
+      "frames": "processed/greeting/frames",
+      "triggers": [
+        "唤醒",
+        "用户靠近/点击"
+      ]
+    },
+    {
+      "id": "success",
+      "displayName": "完成庆祝",
+      "frameCount": 8,
+      "fps": 10,
+      "loop": true,
+      "sheet": "processed/success/success-sheet-transparent.png",
+      "checkerSheet": "processed/success/success-sheet-checker.png",
+      "frames": "processed/success/frames",
+      "triggers": [
+        "任务完成",
+        "测试通过"
+      ]
+    },
+    {
+      "id": "error",
+      "displayName": "困惑/出错",
+      "frameCount": 8,
+      "fps": 8,
+      "loop": true,
+      "sheet": "processed/error/error-sheet-transparent.png",
+      "checkerSheet": "processed/error/error-sheet-checker.png",
+      "frames": "processed/error/frames",
+      "triggers": [
+        "命令失败",
+        "需要用户介入"
+      ]
+    },
+    {
+      "id": "sleep",
+      "displayName": "睡眠省电",
+      "frameCount": 8,
+      "fps": 5,
+      "loop": true,
+      "sheet": "processed/sleep/sleep-sheet-transparent.png",
+      "checkerSheet": "processed/sleep/sleep-sheet-checker.png",
+      "frames": "processed/sleep/frames",
+      "triggers": [
+        "长时间空闲",
+        "夜间模式"
+      ]
+    },
+    {
+      "id": "typing",
+      "displayName": "打字执行",
+      "frameCount": 8,
+      "fps": 10,
+      "loop": true,
+      "sheet": "processed/typing/typing-sheet-transparent.png",
+      "checkerSheet": "processed/typing/typing-sheet-checker.png",
+      "frames": "processed/typing/frames",
+      "triggers": [
+        "编辑文件",
+        "运行命令",
+        "调用 Codex"
+      ]
+    },
+    {
+      "id": "dragged",
+      "displayName": "拖拽悬空",
+      "frameCount": 8,
+      "fps": 10,
+      "loop": true,
+      "sheet": "processed/dragged/dragged-sheet-transparent.png",
+      "checkerSheet": "processed/dragged/dragged-sheet-checker.png",
+      "frames": "processed/dragged/frames",
+      "triggers": [
+        "鼠标拖拽",
+        "桌宠被拎起"
+      ]
+    },
+    {
+      "id": "listening",
+      "displayName": "认真听输入",
+      "frameCount": 8,
+      "fps": 8,
+      "loop": true,
+      "sheet": "processed/listening/listening-sheet-transparent.png",
+      "checkerSheet": "processed/listening/listening-sheet-checker.png",
+      "frames": "processed/listening/frames",
+      "triggers": [
+        "悬浮输入",
+        "语音/文字收听"
+      ]
+    },
+    {
+      "id": "browser",
+      "displayName": "浏览器操作",
+      "frameCount": 8,
+      "fps": 9,
+      "loop": true,
+      "sheet": "processed/browser/browser-sheet-transparent.png",
+      "checkerSheet": "processed/browser/browser-sheet-checker.png",
+      "frames": "processed/browser/frames",
+      "triggers": [
+        "网页搜索",
+        "登录流程",
+        "页面检查"
+      ]
+    },
+    {
+      "id": "approval_wait",
+      "displayName": "等待确认",
+      "frameCount": 8,
+      "fps": 7,
+      "loop": true,
+      "sheet": "processed/approval_wait/approval_wait-sheet-transparent.png",
+      "checkerSheet": "processed/approval_wait/approval_wait-sheet-checker.png",
+      "frames": "processed/approval_wait/frames",
+      "triggers": [
+        "高风险操作",
+        "授权/确认"
+      ]
+    },
+    {
+      "id": "dance",
+      "displayName": "跳舞彩蛋",
+      "frameCount": 8,
+      "fps": 12,
+      "loop": true,
+      "sheet": "processed/dance/dance-sheet-transparent.png",
+      "checkerSheet": "processed/dance/dance-sheet-checker.png",
+      "frames": "processed/dance/frames",
+      "triggers": [
+        "大成功",
+        "彩蛋互动"
+      ]
+    }
+  ],
+  "suggestedStateMachine": {
+    "boot": "greeting",
+    "idle": "idle",
+    "planning": "thinking",
+    "executing": "typing",
+    "listening": "listening",
+    "dragged": "dragged",
+    "browser": "browser",
+    "approvalWait": "approval_wait",
+    "success": "success",
+    "celebration": "dance",
+    "recoverableError": "error",
+    "longIdle": "sleep"
+  },
+  "backlog": [
+    "annoyed: 连点或拖太久时不满",
+    "summon-codex: 拉起 Codex 或新建项目"
+  ]
+}

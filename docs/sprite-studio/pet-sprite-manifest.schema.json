@@ -1,0 +1,207 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://taffy-agent.local/schemas/pet-sprite-manifest.schema.json",
+  "title": "PetSpriteManifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "characterId",
+    "displayName",
+    "style",
+    "canvas",
+    "defaultState",
+    "states",
+    "qa"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "pattern": "^1\\.\\d+\\.\\d+$"
+    },
+    "characterId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{1,62}[a-z0-9]$"
+    },
+    "displayName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "style": {
+      "type": "string",
+      "enum": ["pixel"]
+    },
+    "canvas": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["width", "height", "scale"],
+      "properties": {
+        "width": {
+          "type": "integer",
+          "enum": [128, 192, 256]
+        },
+        "height": {
+          "type": "integer",
+          "enum": [128, 192, 256]
+        },
+        "scale": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 4
+        }
+      }
+    },
+    "defaultState": {
+      "$ref": "#/$defs/stateName"
+    },
+    "states": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": false,
+      "properties": {
+        "idle": {
+          "$ref": "#/$defs/stateAnimation"
+        },
+        "listening": {
+          "$ref": "#/$defs/stateAnimation"
+        },
+        "thinking": {
+          "$ref": "#/$defs/stateAnimation"
+        },
+        "typing": {
+          "$ref": "#/$defs/stateAnimation"
+        },
+        "executing": {
+          "$ref": "#/$defs/stateAnimation"
+        },
+        "waiting_user": {
+          "$ref": "#/$defs/stateAnimation"
+        },
+        "success": {
+          "$ref": "#/$defs/stateAnimation"
+        },
+        "error": {
+          "$ref": "#/$defs/stateAnimation"
+        },
+        "sleep": {
+          "$ref": "#/$defs/stateAnimation"
+        },
+        "dragged": {
+          "$ref": "#/$defs/stateAnimation"
+        }
+      },
+      "required": ["idle"]
+    },
+    "qa": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["releaseReady", "report"],
+      "properties": {
+        "releaseReady": {
+          "type": "boolean"
+        },
+        "report": {
+          "type": "string",
+          "pattern": "^qa/[a-zA-Z0-9._/-]+\\.json$"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "stateName": {
+      "type": "string",
+      "enum": [
+        "idle",
+        "listening",
+        "thinking",
+        "typing",
+        "executing",
+        "waiting_user",
+        "success",
+        "error",
+        "sleep",
+        "dragged"
+      ]
+    },
+    "stateAnimation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fps", "loop", "sheet", "frames", "anchor", "hitbox"],
+      "properties": {
+        "fps": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 24
+        },
+        "loop": {
+          "type": "boolean"
+        },
+        "sheet": {
+          "type": "string",
+          "pattern": "^sprites/[a-z_]+/sheet\\.png$"
+        },
+        "frames": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^sprites/[a-z_]+/frame-[0-9]{3}\\.png$"
+          },
+          "minItems": 1,
+          "maxItems": 24
+        },
+        "anchor": {
+          "$ref": "#/$defs/point"
+        },
+        "hitbox": {
+          "$ref": "#/$defs/rect"
+        }
+      }
+    },
+    "point": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y"],
+      "properties": {
+        "x": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 256
+        },
+        "y": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 256
+        }
+      }
+    },
+    "rect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y", "width", "height"],
+      "properties": {
+        "x": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 256
+        },
+        "y": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 256
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 256
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 256
+        }
+      }
+    }
+  }
+}
+

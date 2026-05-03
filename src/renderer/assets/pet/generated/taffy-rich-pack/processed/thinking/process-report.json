@@ -1,0 +1,152 @@
+{
+  "input": "C:\\26spring\\速成项目\\taffy\\.taffy\\gpt-sprite-runs\\taffy-rich-pack\\sources\\thinking-source.png",
+  "action": "thinking",
+  "frames": 8,
+  "frameSize": 256,
+  "sourceSize": {
+    "width": 1774,
+    "height": 887
+  },
+  "detectedCells": [
+    {
+      "left": 5,
+      "top": 5,
+      "width": 435,
+      "height": 435
+    },
+    {
+      "left": 447,
+      "top": 5,
+      "width": 436,
+      "height": 435
+    },
+    {
+      "left": 891,
+      "top": 5,
+      "width": 436,
+      "height": 435
+    },
+    {
+      "left": 1334,
+      "top": 5,
+      "width": 435,
+      "height": 435
+    },
+    {
+      "left": 5,
+      "top": 447,
+      "width": 435,
+      "height": 435
+    },
+    {
+      "left": 447,
+      "top": 447,
+      "width": 436,
+      "height": 435
+    },
+    {
+      "left": 891,
+      "top": 447,
+      "width": 436,
+      "height": 435
+    },
+    {
+      "left": 1334,
+      "top": 447,
+      "width": 435,
+      "height": 435
+    }
+  ],
+  "sheetPath": ".taffy\\gpt-sprite-runs\\taffy-rich-pack\\processed\\thinking\\thinking-sheet-transparent.png",
+  "checkerPath": ".taffy\\gpt-sprite-runs\\taffy-rich-pack\\processed\\thinking\\thinking-sheet-checker.png",
+  "htmlPath": ".taffy\\gpt-sprite-runs\\taffy-rich-pack\\processed\\thinking\\preview.html",
+  "alphaCorners": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "greenResidue": 0,
+  "quality": [
+    {
+      "frame": 0,
+      "alphaCorners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "greenResidue": 0
+    },
+    {
+      "frame": 1,
+      "alphaCorners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "greenResidue": 0
+    },
+    {
+      "frame": 2,
+      "alphaCorners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "greenResidue": 0
+    },
+    {
+      "frame": 3,
+      "alphaCorners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "greenResidue": 0
+    },
+    {
+      "frame": 4,
+      "alphaCorners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "greenResidue": 0
+    },
+    {
+      "frame": 5,
+      "alphaCorners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "greenResidue": 0
+    },
+    {
+      "frame": 6,
+      "alphaCorners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "greenResidue": 0
+    },
+    {
+      "frame": 7,
+      "alphaCorners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "greenResidue": 0
+    }
+  ]
+}

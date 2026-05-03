@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Taffy GPT Sprite Pack Preview</title>
+<style>
+  :root { color-scheme: dark; --size: 192px; --frames: 8; }
+  body { margin: 0; min-height: 100vh; font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif; background: #11131a; color: #f7f3ef; }
+  main { width: min(1120px, calc(100vw - 32px)); margin: 0 auto; padding: 28px 0 42px; }
+  h1 { margin: 0 0 6px; font-size: 26px; letter-spacing: 0; }
+  p { margin: 0 0 24px; color: #beb7b2; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .card { min-height: 290px; border: 1px solid rgba(255,255,255,.12); border-radius: 8px; background: #1b1d26; display: grid; place-items: center; padding: 18px; box-sizing: border-box; }
+  .meta { width: 100%; display: grid; gap: 4px; margin-bottom: 12px; }
+  strong { font-size: 18px; }
+  span { color: #f2c8d3; }
+  small { color: #96919c; line-height: 1.45; }
+  .sprite { width: var(--size); height: var(--size); image-rendering: pixelated; background-image: var(--sheet); background-repeat: no-repeat; background-size: calc(var(--size) * var(--frames)) var(--size); animation: play var(--duration) steps(8) infinite; filter: drop-shadow(0 10px 18px rgba(0,0,0,.38)); }
+  @keyframes play { from { background-position-x: 0; } to { background-position-x: calc(var(--size) * var(--frames) * -1); } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Taffy GPT Sprite Pack</h1>
+  <p>透明帧、去绿边、逐帧居中后的动作预览。</p>
+  <div class="grid">
+  <section class="card">
+    <div class="meta"><strong>idle</strong><span>站立呼吸</span><small>8 fps · 默认待机 / 短暂停顿</small></div>
+    <div class="sprite" style="--sheet: url('processed/idle/idle-sheet-transparent.png'); --duration: 1.00s"></div>
+  </section>
+
+  <section class="card">
+    <div class="meta"><strong>thinking</strong><span>思考规划</span><small>7 fps · LLM 推理 / 等待工具返回</small></div>
+    <div class="sprite" style="--sheet: url('processed/thinking/thinking-sheet-transparent.png'); --duration: 1.14s"></div>
+  </section>
+
+  <section class="card">
+    <div class="meta"><strong>greeting</strong><span>招呼互动</span><small>9 fps · 唤醒 / 用户靠近/点击</small></div>
+    <div class="sprite" style="--sheet: url('processed/greeting/greeting-sheet-transparent.png'); --duration: 0.89s"></div>
+  </section>
+
+  <section class="card">
+    <div class="meta"><strong>success</strong><span>完成庆祝</span><small>10 fps · 任务完成 / 测试通过</small></div>
+    <div class="sprite" style="--sheet: url('processed/success/success-sheet-transparent.png'); --duration: 0.80s"></div>
+  </section>
+
+  <section class="card">
+    <div class="meta"><strong>error</strong><span>困惑/出错</span><small>8 fps · 命令失败 / 需要用户介入</small></div>
+    <div class="sprite" style="--sheet: url('processed/error/error-sheet-transparent.png'); --duration: 1.00s"></div>
+  </section>
+
+  <section class="card">
+    <div class="meta"><strong>sleep</strong><span>睡眠省电</span><small>5 fps · 长时间空闲 / 夜间模式</small></div>
+    <div class="sprite" style="--sheet: url('processed/sleep/sleep-sheet-transparent.png'); --duration: 1.60s"></div>
+  </section>
+
+  <section class="card">
+    <div class="meta"><strong>typing</strong><span>打字执行</span><small>10 fps · 编辑文件 / 运行命令 / 调用 Codex</small></div>
+    <div class="sprite" style="--sheet: url('processed/typing/typing-sheet-transparent.png'); --duration: 0.80s"></div>
+  </section>
+
+  <section class="card">
+    <div class="meta"><strong>dragged</strong><span>拖拽悬空</span><small>10 fps · 鼠标拖拽 / 桌宠被拎起</small></div>
+    <div class="sprite" style="--sheet: url('processed/dragged/dragged-sheet-transparent.png'); --duration: 0.80s"></div>
+  </section>
+
+  <section class="card">
+    <div class="meta"><strong>listening</strong><span>认真听输入</span><small>8 fps · 悬浮输入 / 语音/文字收听</small></div>
+    <div class="sprite" style="--sheet: url('processed/listening/listening-sheet-transparent.png'); --duration: 1.00s"></div>
+  </section>
+
+  <section class="card">
+    <div class="meta"><strong>browser</strong><span>浏览器操作</span><small>9 fps · 网页搜索 / 登录流程 / 页面检查</small></div>
+    <div class="sprite" style="--sheet: url('processed/browser/browser-sheet-transparent.png'); --duration: 0.89s"></div>
+  </section>
+
+  <section class="card">
+    <div class="meta"><strong>approval_wait</strong><span>等待确认</span><small>7 fps · 高风险操作 / 授权/确认</small></div>
+    <div class="sprite" style="--sheet: url('processed/approval_wait/approval_wait-sheet-transparent.png'); --duration: 1.14s"></div>
+  </section>
+
+  <section class="card">
+    <div class="meta"><strong>dance</strong><span>跳舞彩蛋</span><small>12 fps · 大成功 / 彩蛋互动</small></div>
+    <div class="sprite" style="--sheet: url('processed/dance/dance-sheet-transparent.png'); --duration: 0.67s"></div>
+  </section></div>
+</main>
+</body>
+</html>

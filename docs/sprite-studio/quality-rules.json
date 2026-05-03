@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "1.0.0",
+  "profiles": {
+    "release": {
+      "maxRegenerationsPerFrame": 3,
+      "maxRegenerationsPerAction": 5,
+      "maxAnchorDriftPx": 3,
+      "maxHeadDriftPx": 6,
+      "maxPaletteDrift": 0.12,
+      "maxSilhouetteDrift": 0.28,
+      "minAlphaCleanliness": 0.985,
+      "minSubjectCoverage": 0.12,
+      "maxSubjectCoverage": 0.82,
+      "minLoopContinuity": 0.82,
+      "maxSemiTransparentEdgeRatio": 0.04,
+      "maxBackgroundResidueRatio": 0.01,
+      "maxConnectedComponents": 3
+    },
+    "draft": {
+      "maxRegenerationsPerFrame": 1,
+      "maxRegenerationsPerAction": 2,
+      "maxAnchorDriftPx": 6,
+      "maxHeadDriftPx": 10,
+      "maxPaletteDrift": 0.2,
+      "maxSilhouetteDrift": 0.38,
+      "minAlphaCleanliness": 0.96,
+      "minSubjectCoverage": 0.08,
+      "maxSubjectCoverage": 0.88,
+      "minLoopContinuity": 0.72,
+      "maxSemiTransparentEdgeRatio": 0.08,
+      "maxBackgroundResidueRatio": 0.025,
+      "maxConnectedComponents": 5
+    }
+  },
+  "failureActions": {
+    "anchor_drift": "realign_then_regenerate_bad_frames",
+    "palette_drift": "requantize_then_regenerate_if_needed",
+    "alpha_residue": "rerun_background_removal_then_regenerate_if_needed",
+    "subject_cutoff": "regenerate_frame_with_larger_margin",
+    "extra_character": "regenerate_action_sheet",
+    "loop_break": "regenerate_boundary_frames",
+    "canonical_unstable": "regenerate_canonical_sheet"
+  }
+}
+

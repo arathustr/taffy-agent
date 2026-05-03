@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "1.0.0",
+  "canvasPresets": [128, 192, 256],
+  "frameCountPresets": {
+    "compact": {
+      "idle": 4,
+      "listening": 4,
+      "thinking": 6,
+      "typing": 6,
+      "executing": 6,
+      "waiting_user": 4,
+      "success": 4,
+      "error": 4,
+      "sleep": 6,
+      "dragged": 2
+    },
+    "standard": {
+      "idle": 6,
+      "listening": 6,
+      "thinking": 8,
+      "typing": 8,
+      "executing": 8,
+      "waiting_user": 6,
+      "success": 6,
+      "error": 6,
+      "sleep": 8,
+      "dragged": 4
+    },
+    "rich": {
+      "idle": 8,
+      "listening": 8,
+      "thinking": 10,
+      "typing": 10,
+      "executing": 10,
+      "waiting_user": 8,
+      "success": 8,
+      "error": 8,
+      "sleep": 12,
+      "dragged": 6
+    }
+  },
+  "actions": {
+    "idle": {
+      "fps": 8,
+      "loop": true,
+      "motionArc": "subtle breathing, tiny hair bounce, occasional blink",
+      "allowedChanges": ["eye blink", "1-2 pixel vertical bob", "small hair tip movement"],
+      "forbiddenChanges": ["new pose", "walking", "new outfit", "camera angle change"]
+    },
+    "listening": {
+      "fps": 8,
+      "loop": true,
+      "motionArc": "turn attention toward user, perk up, blink",
+      "allowedChanges": ["small head tilt", "eyes open wider", "tiny hand movement"],
+      "forbiddenChanges": ["large prop", "extra person", "dramatic expression change"]
+    },
+    "thinking": {
+      "fps": 8,
+      "loop": true,
+      "motionArc": "focused thinking, hand near chin, slow bob",
+      "allowedChanges": ["pensive expression", "small hand movement", "tiny question mark effect if requested"],
+      "forbiddenChanges": ["complex background", "new accessories", "large text"]
+    },
+    "typing": {
+      "fps": 10,
+      "loop": true,
+      "motionArc": "hands alternate typing, head lightly bobbing",
+      "allowedChanges": ["alternating hands", "focused eyes", "small body bob"],
+      "forbiddenChanges": ["full keyboard covering body", "desk background", "new costume"]
+    },
+    "executing": {
+      "fps": 10,
+      "loop": true,
+      "motionArc": "busy working, small spark or progress gesture",
+      "allowedChanges": ["small tool gesture", "determined expression", "subtle glow effect"],
+      "forbiddenChanges": ["large machine", "extra characters", "complex scene"]
+    },
+    "waiting_user": {
+      "fps": 8,
+      "loop": true,
+      "motionArc": "waiting politely, slight sway, look toward user",
+      "allowedChanges": ["small wave", "patient expression", "blink"],
+      "forbiddenChanges": ["sad collapse", "leaving frame", "new object"]
+    },
+    "success": {
+      "fps": 10,
+      "loop": false,
+      "motionArc": "happy bounce, small celebratory gesture, return-ready final pose",
+      "allowedChanges": ["smile", "small jump", "tiny sparkle effect"],
+      "forbiddenChanges": ["confetti covering character", "large text", "outfit change"]
+    },
+    "error": {
+      "fps": 8,
+      "loop": true,
+      "motionArc": "confused or apologetic shake, small recovery loop",
+      "allowedChanges": ["worried eyes", "small head shake", "tiny warning effect"],
+      "forbiddenChanges": ["crying breakdown", "large warning sign", "body deformation"]
+    },
+    "sleep": {
+      "fps": 6,
+      "loop": true,
+      "motionArc": "sleepy breathing, eyes closed, gentle sway",
+      "allowedChanges": ["closed eyes", "tiny breathing motion", "small sleep bubble if requested"],
+      "forbiddenChanges": ["lying down outside frame", "bed background", "new outfit"]
+    },
+    "dragged": {
+      "fps": 8,
+      "loop": true,
+      "motionArc": "being carried or pulled, compact startled pose",
+      "allowedChanges": ["startled expression", "feet lifted slightly", "small wobble"],
+      "forbiddenChanges": ["falling out of frame", "new character hand", "large motion blur"]
+    }
+  }
+}
+

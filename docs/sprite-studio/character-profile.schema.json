@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://taffy-agent.local/schemas/character-profile.schema.json",
+  "title": "CharacterSpriteProfile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "characterId",
+    "displayName",
+    "sourceImageHash",
+    "target",
+    "appearance",
+    "palette"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "pattern": "^1\\.\\d+\\.\\d+$"
+    },
+    "characterId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{1,62}[a-z0-9]$"
+    },
+    "displayName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "sourceImageHash": {
+      "type": "string",
+      "minLength": 16,
+      "maxLength": 128
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "canvasWidth",
+        "canvasHeight",
+        "frameCountPreset",
+        "pixelStyle"
+      ],
+      "properties": {
+        "canvasWidth": {
+          "type": "integer",
+          "enum": [128, 192, 256]
+        },
+        "canvasHeight": {
+          "type": "integer",
+          "enum": [128, 192, 256]
+        },
+        "frameCountPreset": {
+          "type": "string",
+          "enum": ["compact", "standard", "rich"]
+        },
+        "pixelStyle": {
+          "type": "string",
+          "enum": ["clean-chibi", "rpg", "soft-chibi", "crisp-outline"]
+        }
+      }
+    },
+    "appearance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary", "mustKeep", "mustAvoid"],
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "hair": {
+          "type": "string",
+          "maxLength": 240
+        },
+        "outfit": {
+          "type": "string",
+          "maxLength": 360
+        },
+        "accessories": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "maxItems": 16
+        },
+        "mustKeep": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          },
+          "minItems": 1,
+          "maxItems": 24
+        },
+        "mustAvoid": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          },
+          "minItems": 1,
+          "maxItems": 24
+        }
+      }
+    },
+    "palette": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maxColors", "dominant"],
+      "properties": {
+        "maxColors": {
+          "type": "integer",
+          "minimum": 8,
+          "maximum": 48
+        },
+        "dominant": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^#[0-9a-fA-F]{6}$"
+          },
+          "minItems": 3,
+          "maxItems": 16
+        }
+      }
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 1000
+    }
+  }
+}
+
