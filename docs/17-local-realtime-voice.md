@@ -6,7 +6,7 @@ Taffy Agent 的语音主线改为本地常驻 TTS 服务，不再依赖外部 Gr
 
 首选 GPT-SoVITS v2Pro/v2ProPlus：
 
-- 当前数据约 91 分钟，581 条标注，933 个 wav。
+- 当前训练清单约 57 分钟，581 条标注；原始压缩包内约 933 个 wav。
 - 本机 RTX 4060 Ti 16GB 足够做本地微调和推理。
 - Taffy Agent 侧使用分句合成、队列播放、短句缓存，让首句尽快出声。
 
@@ -65,6 +65,7 @@ API 地址为 `http://127.0.0.1:9880/tts`。
 默认本地端点：
 
 ```env
+TAFFY_TTS_ENABLED=true
 TAFFY_TTS_PROVIDER=gpt-sovits
 TAFFY_TTS_ENDPOINT=http://127.0.0.1:9880/tts
 TAFFY_TTS_REALTIME=true
@@ -72,7 +73,40 @@ TAFFY_TTS_CHUNK_CHARS=52
 TAFFY_TTS_CACHE=true
 ```
 
-App 会把长回复按标点切成短句，第一句生成后立即播放，同时预取下一句。对于常用反馈短句，会走内存缓存，减少重复合成延迟。
+App 会把长回复按标点切成短句，第一句生成后立即播放，同时预取下一句。对于常用反馈短句，会走内存缓存，减少重复合成延迟。GPT-SoVITS API 的 transport streaming 会产生分片 wav，不适合直接交给浏览器音频元素；Taffy Agent 使用 App 层分句实现实时感，API 请求保持标准 wav 返回。
+
+本机已验证的 GPT-SoVITS v2ProPlus 路径：
+
+```text
+C:\taffy-voice\GPT-SoVITS\
+  GPT_weights_v2ProPlus\Taffy-e15.ckpt
+  SoVITS_weights_v2ProPlus\Taffy_e8_s608.pth
+  GPT_SoVITS\configs\taffy_tts_infer.yaml
+```
+
+启动本机训练模型：
+
+```powershell
+$env:TAFFY_GPTSOVITS_ROOT="C:\taffy-voice\GPT-SoVITS"
+$env:TAFFY_GPTSOVITS_PYTHON="C:\taffy-voice\miniforge\envs\GPTSoVits\python.exe"
+npm run voice:start
+```
+
+后台启动：
+
+```powershell
+pwsh -ExecutionPolicy Bypass -File scripts/start-gptsovits-api.ps1 -Background
+```
+
+推荐本地 `.env` 参考音频：
+
+```env
+TAFFY_TTS_REF_AUDIO=C:\taffy-voice\datasets\Taffy\audios\raw\0299_Taffy_499.wav
+TAFFY_TTS_PROMPT_TEXT=下播了喵。拜拜喵。
+TAFFY_TTS_SPEED=1.04
+```
+
+热启动后短句合成实测约 1.5-1.8 秒，第一次请求需要加载缓存，可能约 7 秒。
 
 ## 训练后建议
 

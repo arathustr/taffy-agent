@@ -1,13 +1,25 @@
 import path from 'node:path';
+import fs from 'node:fs';
 import dotenv from 'dotenv';
 import type { RuntimeConfig } from '../shared/contracts';
 
+const envCandidates = [
+  process.env.TAFFY_ENV_PATH,
+  path.resolve(process.cwd(), '.env'),
+  process.execPath ? path.resolve(path.dirname(process.execPath), '.env') : undefined
+].filter((candidate): candidate is string => Boolean(candidate));
+
+for (const envPath of envCandidates) {
+  if (fs.existsSync(envPath)) {
+    dotenv.config({ path: envPath });
+    break;
+  }
+}
+
 const projectRoot = process.env.TAFFY_PROJECT_ROOT ?? process.cwd();
 
-dotenv.config({ path: path.resolve(process.cwd(), '.env') });
-
 export function getProjectRoot(): string {
-  return process.cwd();
+  return projectRoot;
 }
 
 export function loadRuntimeConfig(): RuntimeConfig {
@@ -38,7 +50,7 @@ export function loadRuntimeConfig(): RuntimeConfig {
       trustedWorkspaces: [projectRoot]
     },
     voice: {
-      enabled: false,
+      enabled: process.env.TAFFY_TTS_ENABLED === 'true' || process.env.TAFFY_TTS_ENABLED === '1',
       provider: (process.env.TAFFY_TTS_PROVIDER as RuntimeConfig['voice']['provider']) || 'gpt-sovits',
       endpoint: process.env.TAFFY_TTS_ENDPOINT || 'http://127.0.0.1:9880/tts',
       volume: Number(process.env.TAFFY_TTS_VOLUME || 0.78),

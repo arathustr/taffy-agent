@@ -247,7 +247,9 @@ async function fetchGptSoVitsAudioUrl(text: string, config: VoiceConfig): Promis
     fragment_interval: 0.12,
     min_chunk_length: 8,
     media_type: 'wav',
-    streaming_mode: config.realtime !== false,
+    // Browser playback expects one valid wav blob. Realtime behavior is handled
+    // by app-level sentence chunking instead of GPT-SoVITS transport streaming.
+    streaming_mode: false,
     speed_factor: sanitizeSpeed(config.speed),
     top_k: 5,
     top_p: 1,
