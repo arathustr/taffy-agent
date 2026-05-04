@@ -23,6 +23,7 @@
 *.gif binary
 *.webp binary
 *.ico binary
+docs/assets/audio/*.wav binary
 
 voice-models/gptsovits/taffy-v2proplus/**/*.ckpt filter=lfs diff=lfs merge=lfs -text
 voice-models/gptsovits/taffy-v2proplus/**/*.pth filter=lfs diff=lfs merge=lfs -text
