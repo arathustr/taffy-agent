@@ -22,6 +22,11 @@ models/
 *.ckpt
 *.pth
 *.safetensors
+!voice-models/
+!voice-models/**
+!voice-models/gptsovits/taffy-v2proplus/**/*.ckpt
+!voice-models/gptsovits/taffy-v2proplus/**/*.pth
+!voice-models/gptsovits/taffy-v2proplus/**/*.wav
 
 # OS / editor
 .DS_Store

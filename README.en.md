@@ -10,13 +10,14 @@
 ![DeepSeek](https://img.shields.io/badge/LLM-DeepSeek-4D6BFF)
 ![Codex](https://img.shields.io/badge/Codex-ready-111111)
 ![Computer Use](https://img.shields.io/badge/Computer%20Use-Agent%20Terminal-111111)
+![Git LFS](https://img.shields.io/badge/Git%20LFS-voice%20bundle-F64935)
 ![Platform](https://img.shields.io/badge/platform-Windows-0078D4?logo=windows&logoColor=white)
 
 Taffy Agent is a graphical agent terminal for computer-use workflows. It brings browser observation, Codex coding tasks, shell/file operations, DeepSeek reasoning, approvals, task timelines, and voice feedback into a floating character-driven interface.
 
 The character layer is not the product's main point. It is the visual shell, status indicator, input surface, approval surface, and feedback layer for a serious multi-tool agent terminal inspired by workflows seen in systems such as Hermes or OpenClaw.
 
-This is a fan-made, non-commercial research project. It is not an official product and does not bundle official Live2D models, extracted textures, recordings, or commercial assets.
+This is a fan-made, non-commercial research project. It is not an official product. The repository bundles user-trained GPT-SoVITS inference weights and a short prompt reference audio for easier local demos, but it does not bundle official Live2D models, extracted textures, raw training datasets, or commercial assets.
 
 ![Taffy Agent state reel](docs/assets/gifs/taffy-state-reel.gif)
 
@@ -53,6 +54,8 @@ This is a fan-made, non-commercial research project. It is not an official produ
 ## Quick Start
 
 ```powershell
+git lfs install
+git lfs pull
 npm install
 Copy-Item .env.example .env
 npm run dev
@@ -74,6 +77,37 @@ npm test
 npm run build
 ```
 
+## Local Taffy Voice
+
+The repository includes a trained GPT-SoVITS v2ProPlus inference bundle under `voice-models/gptsovits/taffy-v2proplus/`. Large model files are stored with Git LFS:
+
+- `GPT_weights_v2ProPlus/Taffy-e15.ckpt`
+- `SoVITS_weights_v2ProPlus/Taffy_e8_s608.pth`
+- `reference_audio/taffy_prompt.wav`
+- `taffy_tts_infer.yaml`
+
+Install or clone GPT-SoVITS into `voice-workspace/GPT-SoVITS`, then start the API from this repository:
+
+```powershell
+pwsh -ExecutionPolicy Bypass -File scripts/start-gptsovits-api.ps1 -Background
+```
+
+The start script syncs the bundled weights, reference audio, and inference config into the GPT-SoVITS working tree. To sync the model without starting the API, run:
+
+```powershell
+pwsh -ExecutionPolicy Bypass -File scripts/start-gptsovits-api.ps1 -SyncOnly
+```
+
+After copying `.env.example`, set `TAFFY_TTS_ENABLED=true`:
+
+```env
+TAFFY_TTS_PROVIDER=gpt-sovits
+TAFFY_TTS_ENDPOINT=http://127.0.0.1:9880/tts
+TAFFY_TTS_REF_AUDIO=reference_audio/taffy_prompt.wav
+TAFFY_TTS_PROMPT_TEXT=下播了喵。拜拜喵。
+TAFFY_TTS_SPEED=1.04
+```
+
 ## Configuration
 
 ```env
@@ -82,15 +116,19 @@ DEEPSEEK_API_KEY=
 TAFFY_DEFAULT_MODEL=deepseek-v4-flash
 TAFFY_ADVANCED_MODEL=deepseek-v4-pro
 TAFFY_USE_MOCK_LLM=true
-TAFFY_TTS_ENDPOINT=https://xzjosh-taffy1-2-bert-vits2.ms.show
+TAFFY_TTS_ENABLED=false
+TAFFY_TTS_PROVIDER=gpt-sovits
+TAFFY_TTS_ENDPOINT=http://127.0.0.1:9880/tts
 TAFFY_TTS_VOLUME=0.78
+TAFFY_TTS_REF_AUDIO=reference_audio/taffy_prompt.wav
+TAFFY_TTS_PROMPT_TEXT=下播了喵。拜拜喵。
 ```
 
 `.env` is ignored by Git. Codex credentials and model settings remain owned by the local Codex CLI; Taffy only invokes the local command.
 
 ## Artwork Disclosure
 
-The included pixel-art state pack is a fan-made generated sample. A local user-provided reference was used during development, but the original reference image is not committed. New pixel-art sprite sheets were generated, then cleaned and normalized with local scripts. The repository does not include official models, extracted textures, recordings, or commercial assets.
+The included pixel-art state pack is a fan-made generated sample. A local user-provided reference was used during development, but the original reference image is not committed. New pixel-art sprite sheets were generated, then cleaned and normalized with local scripts. The repository does not include official Live2D models, extracted textures, raw training datasets, or commercial assets. The `voice-models/` bundle is a fan research inference model trained from user-provided data.
 
 For another character, bring authorized reference art and voice data, regenerate the sprite pack, and review the resulting assets before distribution.
 

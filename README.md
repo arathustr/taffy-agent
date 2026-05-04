@@ -10,13 +10,14 @@
 ![DeepSeek](https://img.shields.io/badge/LLM-DeepSeek-4D6BFF)
 ![Codex](https://img.shields.io/badge/Codex-ready-111111)
 ![Computer Use](https://img.shields.io/badge/Computer%20Use-Agent%20Terminal-111111)
+![Git LFS](https://img.shields.io/badge/Git%20LFS-voice%20bundle-F64935)
 ![Platform](https://img.shields.io/badge/platform-Windows-0078D4?logo=windows&logoColor=white)
 
 Taffy Agent 是一个面向 **Computer Use** 的图形化 Agent 终端。它把浏览器观察、Codex 编程任务、Shell/File 操作、DeepSeek 推理、确认审批、任务时间线和语音反馈整合到一个可悬浮的角色化 UI 中。
 
 项目主卖点不是桌面宠物本身。塔菲的形象承担的是 **任务终端外壳、状态指示器、输入入口、审批入口和反馈层**：平时轻量悬浮，需要工作时展开完整控制台，适合承载类似 Hermes / OpenClaw 这类多工具 Agent 工作流。
 
-> 粉丝自用与研究项目，非官方项目，非商业用途。仓库不包含官方 Live2D、拆包素材、录音素材或商业素材。
+> 粉丝自用与研究项目，非官方项目，非商业用途。仓库包含用户提供数据训练得到的 GPT-SoVITS 推理权重和一段短参考提示音频，用于开箱演示；不包含官方 Live2D、拆包贴图、原始训练集或商业素材。
 
 ![Taffy Agent 状态演示](docs/assets/gifs/taffy-state-reel.gif)
 
@@ -126,10 +127,13 @@ Shared
 
 - Windows 10/11
 - Node.js 20+
+- Git LFS（用于拉取内置语音权重）
 - 可选：已登录的 Codex CLI
 - 可选：DeepSeek 官方 API Key
 
 ```powershell
+git lfs install
+git lfs pull
 npm install
 Copy-Item .env.example .env
 npm run dev
@@ -151,6 +155,37 @@ npm test
 npm run build
 ```
 
+## 本地塔菲音色
+
+仓库内置了训练好的 GPT-SoVITS v2ProPlus 推理包，位于 `voice-models/gptsovits/taffy-v2proplus/`，大文件通过 Git LFS 管理：
+
+- `GPT_weights_v2ProPlus/Taffy-e15.ckpt`
+- `SoVITS_weights_v2ProPlus/Taffy_e8_s608.pth`
+- `reference_audio/taffy_prompt.wav`
+- `taffy_tts_infer.yaml`
+
+先安装或克隆 GPT-SoVITS 到 `voice-workspace/GPT-SoVITS`，然后从本仓库根目录启动：
+
+```powershell
+pwsh -ExecutionPolicy Bypass -File scripts/start-gptsovits-api.ps1 -Background
+```
+
+启动脚本会把内置权重、参考音频和推理配置自动同步到 GPT-SoVITS 工作目录。只想先同步模型而不启动 API 时，可以运行：
+
+```powershell
+pwsh -ExecutionPolicy Bypass -File scripts/start-gptsovits-api.ps1 -SyncOnly
+```
+
+复制 `.env.example` 后，把 `TAFFY_TTS_ENABLED=true` 即可使用本地塔菲音色：
+
+```env
+TAFFY_TTS_PROVIDER=gpt-sovits
+TAFFY_TTS_ENDPOINT=http://127.0.0.1:9880/tts
+TAFFY_TTS_REF_AUDIO=reference_audio/taffy_prompt.wav
+TAFFY_TTS_PROMPT_TEXT=下播了喵。拜拜喵。
+TAFFY_TTS_SPEED=1.04
+```
+
 ## 配置
 
 复制 `.env.example` 为 `.env`：
@@ -166,8 +201,9 @@ TAFFY_TTS_PROVIDER=gpt-sovits
 TAFFY_TTS_ENDPOINT=http://127.0.0.1:9880/tts
 TAFFY_TTS_VOLUME=0.78
 TAFFY_TTS_REALTIME=true
-TAFFY_TTS_REF_AUDIO=
-TAFFY_TTS_PROMPT_TEXT=
+TAFFY_TTS_REF_AUDIO=reference_audio/taffy_prompt.wav
+TAFFY_TTS_PROMPT_TEXT=下播了喵。拜拜喵。
+TAFFY_TTS_SPEED=1.04
 ```
 
 说明：
@@ -177,11 +213,11 @@ TAFFY_TTS_PROMPT_TEXT=
 - `TAFFY_USE_MOCK_LLM=true` 时不会消耗 DeepSeek。
 - 使用真实 DeepSeek 时，把 `TAFFY_USE_MOCK_LLM=false` 并填写 `DEEPSEEK_API_KEY`。
 - Codex 的账号、模型、API 配置继续由 Codex CLI 自己管理，Taffy 只调用本机命令。
-- 本地塔菲音色使用 GPT-SoVITS，训练音频和权重不提交；详见 `docs/17-local-realtime-voice.md`。
+- 本地塔菲音色使用 GPT-SoVITS，推理权重随仓库通过 Git LFS 提供；原始训练数据不提交。
 
 ## 美术生成与权利说明
 
-本仓库不包含官方 Live2D、拆包贴图、直播切片、录音素材或商业素材。当前像素状态动画是用于验证交互和素材管线的粉丝生成式样例。
+本仓库不包含官方 Live2D、拆包贴图、直播切片训练集或商业素材。当前像素状态动画是用于验证交互和素材管线的粉丝生成式样例；`voice-models/` 中的语音推理包是用户提供数据训练得到的粉丝研究模型。
 
 生成方式：
 

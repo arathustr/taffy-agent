@@ -4,10 +4,63 @@ param(
   [string]$Root = $env:TAFFY_GPTSOVITS_ROOT,
   [string]$Python = $env:TAFFY_GPTSOVITS_PYTHON,
   [string]$Config = $env:TAFFY_GPTSOVITS_CONFIG,
-  [switch]$Background
+  [switch]$Background,
+  [switch]$SyncOnly
 )
 
 $ErrorActionPreference = "Stop"
+
+function Copy-IfMissingOrDifferentSize {
+  param(
+    [string]$Source,
+    [string]$Destination
+  )
+
+  if (-not (Test-Path $Source)) {
+    return $false
+  }
+
+  $sourceItem = Get-Item $Source
+  $destinationItem = if (Test-Path $Destination) { Get-Item $Destination } else { $null }
+  if ($destinationItem -and $destinationItem.Length -eq $sourceItem.Length) {
+    return $false
+  }
+
+  $parent = Split-Path -Parent $Destination
+  New-Item -ItemType Directory -Force -Path $parent | Out-Null
+  Copy-Item -LiteralPath $Source -Destination $Destination -Force
+  return $true
+}
+
+function Install-BundledTaffyVoiceModel {
+  param(
+    [string]$Repo,
+    [string]$ProjectRoot
+  )
+
+  $bundle = Join-Path $ProjectRoot "voice-models/gptsovits/taffy-v2proplus"
+  if (-not (Test-Path $bundle)) {
+    return
+  }
+
+  $copied = $false
+  $files = @(
+    @{ Source = "GPT_weights_v2ProPlus/Taffy-e15.ckpt"; Destination = "GPT_weights_v2ProPlus/Taffy-e15.ckpt" },
+    @{ Source = "SoVITS_weights_v2ProPlus/Taffy_e8_s608.pth"; Destination = "SoVITS_weights_v2ProPlus/Taffy_e8_s608.pth" },
+    @{ Source = "reference_audio/taffy_prompt.wav"; Destination = "reference_audio/taffy_prompt.wav" },
+    @{ Source = "taffy_tts_infer.yaml"; Destination = "GPT_SoVITS/configs/taffy_tts_infer.yaml" }
+  )
+
+  foreach ($file in $files) {
+    $source = Join-Path $bundle $file.Source
+    $destination = Join-Path $Repo $file.Destination
+    $copied = (Copy-IfMissingOrDifferentSize -Source $source -Destination $destination) -or $copied
+  }
+
+  if ($copied) {
+    Write-Output "Bundled Taffy GPT-SoVITS model synced into $Repo"
+  }
+}
 
 if (-not $Root) {
   if (Test-Path "C:\taffy-voice\GPT-SoVITS") {
@@ -18,6 +71,8 @@ if (-not $Root) {
 }
 
 $repo = Resolve-Path $Root
+$projectRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
+Install-BundledTaffyVoiceModel -Repo $repo -ProjectRoot $projectRoot
 
 if (-not $Python) {
   $localPython = "C:\taffy-voice\miniforge\envs\GPTSoVits\python.exe"
@@ -27,6 +82,11 @@ if (-not $Python) {
 if (-not $Config) {
   $taffyConfig = Join-Path $repo "GPT_SoVITS/configs/taffy_tts_infer.yaml"
   $Config = if (Test-Path $taffyConfig) { "GPT_SoVITS/configs/taffy_tts_infer.yaml" } else { "GPT_SoVITS/configs/tts_infer.yaml" }
+}
+
+if ($SyncOnly) {
+  Write-Output "GPT-SoVITS model sync completed for $repo"
+  exit 0
 }
 
 $env:PIP_REQUIRE_VIRTUALENV = ""
