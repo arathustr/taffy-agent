@@ -22,6 +22,8 @@
 | [14-character-sprite-studio.md](14-character-sprite-studio.md) | 任意角色主图生成像素桌宠动画的产品规格 |
 | [15-sprite-generation-pipeline.md](15-sprite-generation-pipeline.md) | 像素帧生成、抠图、对齐、自动重抽和质检流水线 |
 | [16-sprite-asset-contracts.md](16-sprite-asset-contracts.md) | 生成资源包、manifest、profile、QA 报告的工程合同 |
+| [17-local-realtime-voice.md](17-local-realtime-voice.md) | 本地 GPT-SoVITS 实时语音、内置推理权重和启动方式 |
+| [voice-research.md](voice-research.md) | 语音方案调研和选型记录 |
 
 ## 一句话定义
 

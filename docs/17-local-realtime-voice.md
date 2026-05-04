@@ -37,7 +37,17 @@ npm run voice:prepare
 
 ## GPT-SoVITS 环境
 
-本仓库不会提交 GPT-SoVITS 本体、训练音频或权重。推荐放在忽略目录：
+本仓库通过 Git LFS 提供已训练好的 Taffy GPT-SoVITS v2ProPlus 推理权重和一段短参考提示音频，目录为：
+
+```text
+voice-models/gptsovits/taffy-v2proplus/
+  GPT_weights_v2ProPlus/Taffy-e15.ckpt
+  SoVITS_weights_v2ProPlus/Taffy_e8_s608.pth
+  reference_audio/taffy_prompt.wav
+  taffy_tts_infer.yaml
+```
+
+本仓库不会提交 GPT-SoVITS 本体、预训练底模或原始训练音频。推荐把 GPT-SoVITS 放在忽略目录：
 
 ```text
 voice-workspace/GPT-SoVITS/
@@ -58,7 +68,7 @@ conda activate GPTSoVits
 pwsh -ExecutionPolicy Bypass -File scripts/start-gptsovits-api.ps1
 ```
 
-API 地址为 `http://127.0.0.1:9880/tts`。
+启动脚本会自动把 `voice-models/gptsovits/taffy-v2proplus/` 中的权重、参考音频和推理配置同步到 GPT-SoVITS 工作目录。API 地址为 `http://127.0.0.1:9880/tts`。
 
 ## App 接入
 
@@ -101,7 +111,7 @@ pwsh -ExecutionPolicy Bypass -File scripts/start-gptsovits-api.ps1 -Background
 推荐本地 `.env` 参考音频：
 
 ```env
-TAFFY_TTS_REF_AUDIO=C:\taffy-voice\datasets\Taffy\audios\raw\0299_Taffy_499.wav
+TAFFY_TTS_REF_AUDIO=reference_audio/taffy_prompt.wav
 TAFFY_TTS_PROMPT_TEXT=下播了喵。拜拜喵。
 TAFFY_TTS_SPEED=1.04
 ```
@@ -120,7 +130,7 @@ GPT-SoVITS API 仍要求每次请求提供参考音频。即使已经加载了 T
 
 ## 安全
 
-训练音频、权重、缓存、模型目录都不要提交到 Git。当前忽略项包括：
+原始训练音频、缓存和 GPT-SoVITS 工作目录都不要提交到 Git。当前忽略项包括：
 
 - `vedio/`
 - `.taffy/`
@@ -129,3 +139,5 @@ GPT-SoVITS API 仍要求每次请求提供参考音频。即使已经加载了 T
 - `*.ckpt`
 - `*.pth`
 - `*.safetensors`
+
+例外：`voice-models/gptsovits/taffy-v2proplus/` 下的推理包通过 Git LFS 提供，方便用户开箱试用本地音色。
