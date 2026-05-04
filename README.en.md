@@ -25,9 +25,9 @@ It is not a reskinned chat window and not just a desktop pet. The character laye
 
 This sample was synthesized with the bundled local GPT-SoVITS v2ProPlus Taffy voice. Transcript: "嗯，雏草姬，塔菲在这里喵。浏览器和 Codex 的任务，都可以交给塔菲先看一下。"
 
-<audio controls src="docs/assets/audio/taffy-agent-voice-demo.wav"></audio>
+[![Play Taffy voice sample](https://img.shields.io/badge/%E2%96%B6%20Play-Taffy%20Voice%20Sample-ff69b4?style=for-the-badge)](https://raw.githubusercontent.com/arathustr/taffy-agent/main/docs/assets/audio/taffy-agent-voice-demo.wav)
 
-If GitHub does not render the player, open [taffy-agent-voice-demo.wav](docs/assets/audio/taffy-agent-voice-demo.wav) directly.
+GitHub README rendering for embedded audio players is inconsistent, so the badge links to the raw WAV. Click it to open and play the sample in the browser, or open the repository file [taffy-agent-voice-demo.wav](docs/assets/audio/taffy-agent-voice-demo.wav).
 
 ## What It Does
 
