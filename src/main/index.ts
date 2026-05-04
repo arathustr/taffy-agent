@@ -22,6 +22,8 @@ let dragSession:
     }
   | undefined;
 
+app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
+
 function logWindow(message: string): void {
   if (process.env.TAFFY_DEBUG_WINDOW !== 'true') return;
   try {

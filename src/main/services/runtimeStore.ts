@@ -13,11 +13,19 @@ function mergeConfig(base: RuntimeConfig, override?: Partial<RuntimeConfig>): Ru
     return base;
   }
 
+  const voice = { ...base.voice, ...override.voice };
+  if (base.voice.referenceAudio && !voice.referenceAudio) {
+    voice.referenceAudio = base.voice.referenceAudio;
+  }
+  if (base.voice.promptText && !voice.promptText) {
+    voice.promptText = base.voice.promptText;
+  }
+
   return {
     llm: { ...base.llm, ...override.llm },
     ui: { ...base.ui, ...override.ui },
     permissions: { ...base.permissions, ...override.permissions },
-    voice: { ...base.voice, ...override.voice }
+    voice
   };
 }
 
@@ -78,4 +86,3 @@ function sanitizeConfig(config: RuntimeConfig): RuntimeConfig {
     }
   };
 }
-

@@ -239,14 +239,14 @@ export function SettingsPanel({ snapshot, onSave, onDetectCodex }: Props) {
           <>
             <input
               value={config.voice.referenceAudio}
-              placeholder="参考音频路径，微调模型可留空"
+              placeholder="参考音频路径，GPT-SoVITS 必填"
               onChange={(event) =>
                 setConfig({ ...config, voice: { ...config.voice, referenceAudio: event.target.value } })
               }
             />
             <input
               value={config.voice.promptText}
-              placeholder="参考音频文本，微调模型可留空"
+              placeholder="参考音频对应文本，建议填写"
               onChange={(event) => setConfig({ ...config, voice: { ...config.voice, promptText: event.target.value } })}
             />
           </>
